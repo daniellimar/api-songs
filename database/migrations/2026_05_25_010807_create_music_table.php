@@ -11,9 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('music', function (Blueprint $table) {
+        Schema::create('musics', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title');
+            $table->string('artist')->nullable();
+            $table->string('album')->nullable();
+
+            $table->string('file_name');
+            $table->string('file_path');
+
+            $table->bigInteger('file_size');
+            $table->string('mime_type');
+
+            $table->integer('duration')->nullable();
+            $table->string('extension');
+
+            $table->json('metadata')->nullable();
+
+            $table->boolean('processed')->default(false);
+
             $table->timestamps();
+
+            $table->index('title');
+            $table->index('artist');
         });
     }
 

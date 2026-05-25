@@ -12,7 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('upload_sessions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+
+            $table->string('original_name');
+            $table->integer('total_chunks');
+            $table->integer('uploaded_chunks')->default(0);
+
+            $table->string('extension');
+            $table->bigInteger('file_size');
+
+            $table->enum('status', [
+                'uploading',
+                'processing',
+                'completed',
+                'failed'
+            ])->default('uploading');
+
             $table->timestamps();
         });
     }

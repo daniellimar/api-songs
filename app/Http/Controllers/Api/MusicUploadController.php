@@ -7,11 +7,12 @@ use App\Http\Requests\ChunkUploadRequest;
 use App\Models\UploadSession;
 use App\Services\ChunkService;
 use App\Services\MusicUploadService;
+use Illuminate\Http\Request;
 
 class MusicUploadController extends Controller
 {
     public function upload(
-        ChunkUploadRequest $request,
+        Request $request,
         ChunkService $chunkService,
         MusicUploadService $musicUploadService
     )

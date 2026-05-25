@@ -13,19 +13,23 @@ class ChunkService
     public function storeChunk(
         UploadSession $session,
         UploadedFile $chunk,
-        int $chunkIndex
-    ): void
-    {
-        $directory = "chunks/{$session->id}";
+        int $index
+    ): void {
 
-        $fileName = "{$chunkIndex}.part";
-
-        Storage::disk($this->disk)
-            ->putFileAs(
-                $directory,
-                $chunk,
-                $fileName
+        $directory =
+            storage_path(
+                'app/chunks/' . $session->id
             );
+
+        if (!file_exists($directory)) {
+
+            mkdir($directory, 0777, true);
+        }
+
+        $chunk->move(
+            $directory,
+            (string) $index
+        );
     }
 
     public function mergeChunks(
